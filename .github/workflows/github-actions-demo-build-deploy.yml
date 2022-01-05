@@ -88,5 +88,6 @@ jobs:
          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
          -Dapp.name=github-actions-demo \
          -DgrantType=client_credentials \
+         -Dapp.runtime=4.3.0 \
          -Denv=DEV \
          -DskipTests
