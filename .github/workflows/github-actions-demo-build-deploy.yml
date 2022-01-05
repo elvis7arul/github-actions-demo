@@ -84,8 +84,9 @@ jobs:
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
-         -Danypoint.username="$ANYPOINT_USERNAME" \
-         -Danypoint.password="$ANYPOINT_PASSWORD" \
-         -Dapp.name=github-actions-demo
+         -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
+         -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
+         -Dapp.name=github-actions-demo \
+         -DgrantType=client_credentials \
          -Denv=DEV \
          -DskipTests
