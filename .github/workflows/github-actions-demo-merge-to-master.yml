@@ -8,14 +8,14 @@ on:
      workflows: ["Deploy to DEV"]
      types: [completed] #requested
 
- jobs:
-   on-success:
+jobs:
+   merge-to-master:
      runs-on: ubuntu-latest
      if: ${{ github.event.workflow_run.conclusion == 'success' }}
      steps:
        - name: Merge development -> master
-        uses: devmasx/merge-branch@master
-        with:
+         uses: devmasx/merge-branch@master
+         with:
           type: now
           from_branch: develop
           target_branch: master
