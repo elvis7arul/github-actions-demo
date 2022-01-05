@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="github-actions-demoFlow" doc:id="1d209121-3834-4942-adab-d1aeafe5ecb5" >
+		<scheduler doc:name="Scheduler" doc:id="1a673ab9-cae2-4c25-bff4-a6addf8a740c" >
+			<scheduling-strategy >
+				<fixed-frequency timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Logger" doc:id="62ba59bc-cd78-4311-83c4-8199ce380c72" message="The Github Actions Demo project invoked successfully"/>
+	</flow>
+</mule>
