@@ -75,16 +75,17 @@ jobs:
       with:
         name: artifacts
 
-    - name: Deploy to Sandbox
+    - name: Deploy to DEV
       env:
-        USERNAME: ${{ secrets.anypoint_cicd_username }}
-        PASSWORD: ${{ secrets.anypoint_cicd_password }}
-        DECRYPTION_KEY: ${{ secrets.decryption_key }}
+        ANYPOINT_USERNAME: ${{ secrets.ANYPOINT_USERNAME }}
+        ANYPOINT_PASSWORD: ${{ secrets.ANYPOINT_PASSWORD }}
+        
       run: |
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
-         -Danypoint.username="$USERNAME" \
-         -Danypoint.password="$PASSWORD" \
-         -Denv=Sandbox \
+         -Danypoint.username="$ANYPOINT_USERNAME" \
+         -Danypoint.password="$ANYPOINT_PASSWORD" \
+         -Dapp.name=github-actions-demo
+         -Denv=DEV \
          -DskipTests
