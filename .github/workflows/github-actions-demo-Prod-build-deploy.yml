@@ -5,10 +5,9 @@ name: Deploy to PROD
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+   workflow_run:
+     workflows: ["Merge to MASTER"]
+     types: [completed] #requested
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,6 +18,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment: Prod
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -80,6 +80,8 @@ jobs:
       env:
         ANYPOINT_PROD_USERNAME: ${{ secrets.ANYPOINT_CLIENT_ID_PROD }}
         ANYPOINT_PROD_PASSWORD: ${{ secrets.ANYPOINT_CLIENT_SECRET_PROD }}
+        ENV_SUFFIX: prod
+        APP_NAME: ${{ github.event.repository.name }}
         
       run: |
         artifactName=$(ls *.jar | head -1)
@@ -87,7 +89,7 @@ jobs:
          -Dmule.artifact=$artifactName \
          -DconnectedApp_clientId="$ANYPOINT_PROD_USERNAME" \
          -DconnectedApp_clientSecret="$ANYPOINT_PROD_PASSWORD" \
-         -Dapp.name=github-actions-demo \
+         -Dapp.name=$APP_NAME-$ENV_SUFFIX \
          -DgrantType=client_credentials \
          -Dapp.runtime=4.3.0 \
          -Denv=PROD \
