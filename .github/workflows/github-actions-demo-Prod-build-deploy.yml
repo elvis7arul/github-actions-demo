@@ -77,8 +77,8 @@ jobs:
 
     - name: Deploy to PROD
       env:
-        ANYPOINT_USERNAME: ${{ secrets.ANYPOINT_USERNAME }}
-        ANYPOINT_PASSWORD: ${{ secrets.ANYPOINT_PASSWORD }}
+        ANYPOINT_USERNAME: ${{ secrets.ANYPOINT_CLIENT_ID_PROD }}
+        ANYPOINT_PASSWORD: ${{ secrets.ANYPOINT_CLIENT_SECRET_PROD }}
         
       run: |
         artifactName=$(ls *.jar | head -1)
