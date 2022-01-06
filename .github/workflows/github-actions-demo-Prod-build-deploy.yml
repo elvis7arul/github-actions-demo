@@ -77,15 +77,15 @@ jobs:
 
     - name: Deploy to PROD
       env:
-        ANYPOINT_USERNAME: ${{ secrets.ANYPOINT_CLIENT_ID_PROD }}
-        ANYPOINT_PASSWORD: ${{ secrets.ANYPOINT_CLIENT_SECRET_PROD }}
+        ANYPOINT_PROD_USERNAME: ${{ secrets.ANYPOINT_CLIENT_ID_PROD }}
+        ANYPOINT_PROD_PASSWORD: ${{ secrets.ANYPOINT_CLIENT_SECRET_PROD }}
         
       run: |
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
-         -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
-         -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
+         -DconnectedApp_clientId="$ANYPOINT_PROD_USERNAME" \
+         -DconnectedApp_clientSecret="$ANYPOINT_PROD_PASSWORD" \
          -Dapp.name=github-actions-demo \
          -DgrantType=client_credentials \
          -Dapp.runtime=4.3.0 \
