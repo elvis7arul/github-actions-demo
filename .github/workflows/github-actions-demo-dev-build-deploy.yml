@@ -23,10 +23,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE
+    - uses: actions/checkout@v2
       
-      - name: Create local changes
+    - name: Create local changes
       run: |
         cat > "~/$github-actions-demo/src/main/resources/properties.properties" <<EOF
         api.id=9879879
@@ -34,45 +34,45 @@ jobs:
         EOF
       
       #Caches the maven dependencies
-      - uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      
-      #Setup JDK
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      
-      #Maven Build 
-      - name: Build with Maven
-        run: |
-          mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
-          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
-          -Daws.secretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
-          -DvaultKey=MuleSoft12345678 \
-          -Dapp.name=$APP_NAME-$ENV_SUFFIX \
-          -DgrantType=client_credentials \
-          -Dapp.runtime=4.3.0 \
-          -Denv=DEV \
-          -DskipTests
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    
+    #Setup JDK
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    
+    #Maven Build 
+    - name: Build with Maven
+      run: |
+        mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
+        -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
+        -Daws.secretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
+        -DvaultKey=MuleSoft12345678 \
+        -Dapp.name=$APP_NAME-$ENV_SUFFIX \
+        -DgrantType=client_credentials \
+        -Dapp.runtime=4.3.0 \
+        -Denv=DEV \
+        -DskipTests
 
-      # Append Artifact name with Commit Hash
-      - name: Stamp artifact file name with commit hash
-        run: |
-          artifactName1=$(ls target/*.jar | head -1)
-          commitHash=$(git rev-parse --short "$GITHUB_SHA")
-          artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
-          mv $artifactName1 $artifactName2
-          
-      - name: Upload artifact 
-        uses: actions/upload-artifact@master
-        with:
-            name: artifacts
-            path: target/*.jar
+    # Append Artifact name with Commit Hash
+    - name: Stamp artifact file name with commit hash
+      run: |
+        artifactName1=$(ls target/*.jar | head -1)
+        commitHash=$(git rev-parse --short "$GITHUB_SHA")
+        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
+        mv $artifactName1 $artifactName2
+        
+    - name: Upload artifact 
+      uses: actions/upload-artifact@master
+      with:
+          name: artifacts
+          path: target/*.jar
   deploy:
     needs: build
     runs-on: ubuntu-latest
