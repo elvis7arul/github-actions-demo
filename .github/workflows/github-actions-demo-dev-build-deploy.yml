@@ -28,15 +28,16 @@ jobs:
       
     - name: Create local changes
       run: |
-        pwd
+        pwd > $path
         ls -ltr
-        cat >> "/home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties" <<EOF
+        cat >> "$path/src/main/resources/secure-properties.properties" <<EOF
         api.id=9879879
         aws.secretKey=ttt
         api.name=testProj
         mule.vault.key=MuleSoft12345678
         EOF
         cat /home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties
+        cat $path/src/main/resources/secure-properties.properties
       
       #Caches the maven dependencies
     - uses: actions/cache@v1
