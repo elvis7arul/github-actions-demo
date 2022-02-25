@@ -30,7 +30,7 @@ jobs:
       run: |
         pwd
         ls -ltr
-        cat > "/home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties" <<EOF
+        cat >> "/home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties" <<EOF
         api.id=9879879
         aws.secretKey=ttt
         api.name=testProj
@@ -61,8 +61,6 @@ jobs:
       run: |
         mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
         -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
-        -Daws.secretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
-        -DvaultKey=MuleSoft12345678 \
         -Dapp.name=$APP_NAME-$ENV_SUFFIX \
         -DgrantType=client_credentials \
         -Dapp.runtime=4.3.0 \
@@ -115,8 +113,6 @@ jobs:
          -Dmule.artifact=$artifactName \
          -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
-         -Daws.secretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
-         -DvaultKey=MuleSoft12345678 \
          -Dapp.name=$APP_NAME-$ENV_SUFFIX \
          -DgrantType=client_credentials \
          -Dapp.runtime=4.3.0 \
