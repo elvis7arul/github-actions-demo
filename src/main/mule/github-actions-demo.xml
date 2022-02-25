@@ -11,6 +11,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		<s3:basic-connection accessKey="AKIAYTN4MS3CYXCCM6Y3" secretKey="${aws.secretKey}" region="EU_WEST_2" />
 	</s3:config>
 	<global-property doc:name="Global Property" doc:id="b42b9a5d-7853-492a-9930-fdb7dc8c29a6" name="aws.secretKey" value="${aws.secretKey}" />
+	<global-property doc:name="Global Property" doc:id="7e27fc8a-8821-42ba-b369-0511844c5a2e" name="mule.vault.key" value="${mule.vault.key}" />
 	<flow name="github-actions-demoFlow" doc:id="1d209121-3834-4942-adab-d1aeafe5ecb5" >
 		<scheduler doc:name="Scheduler" doc:id="1a673ab9-cae2-4c25-bff4-a6addf8a740c" >
 			<scheduling-strategy >
