@@ -42,7 +42,16 @@ jobs:
       
       #Maven Build 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: |
+          mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
+          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
+          -DawsSecretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
+          -DvaultKey=MuleSoft12345678 \
+          -Dapp.name=$APP_NAME-$ENV_SUFFIX \
+          -DgrantType=client_credentials \
+          -Dapp.runtime=4.3.0 \
+          -Denv=DEV \
+          -DskipTests
 
       # Append Artifact name with Commit Hash
       - name: Stamp artifact file name with commit hash
