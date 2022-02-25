@@ -34,7 +34,7 @@ jobs:
         api.id=9879879
         aws.secretKey=ttt
         api.name=testProj
-        vaultKey=MuleSoft12345678
+        mule.vault.key=MuleSoft12345678
         EOF
         cat /home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties
       
