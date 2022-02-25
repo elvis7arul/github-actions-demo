@@ -30,7 +30,7 @@ jobs:
       run: |
         repoPath=`pwd`
         ls -ltr
-        cat >> "$repoPath/src/main/resources/secure-properties.properties" <<EOF
+        cat >> "$repoPath/src/main/resources/secure-properties.properties" <<EOF\n
         api.id=9879879
         aws.secretKey=ttt
         api.name=testProj
