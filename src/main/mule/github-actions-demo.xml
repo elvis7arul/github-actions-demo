@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+<mule xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="5d170b37-4e5c-4533-b582-68217d7108c5" file="secure-properties.properties" key="${mule.vault.key}" >
+	</secure-properties:config>
+	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="c5baf3de-94fc-4251-950c-3b42bc421d4c" >
+		<s3:basic-connection accessKey="AKIAYTN4MS3CYXCCM6Y3" secretKey="${secure::aws.secretKey}" region="EU_WEST_2" />
+	</s3:config>
 	<flow name="github-actions-demoFlow" doc:id="1d209121-3834-4942-adab-d1aeafe5ecb5" >
 		<scheduler doc:name="Scheduler" doc:id="1a673ab9-cae2-4c25-bff4-a6addf8a740c" >
 			<scheduling-strategy >
@@ -10,5 +17,6 @@
 			</scheduling-strategy>
 		</scheduler>
 		<logger level="INFO" doc:name="Logger" doc:id="62ba59bc-cd78-4311-83c4-8199ce380c72" message="The Github Actions Demo project invoked successfully"/>
+		<s3:create-bucket doc:id="ffa56aeb-7843-49eb-bb4f-b627280563a3" config-ref="Amazon_S3_Configuration" bucketName="test1" region="EU_LONDON"/>
 	</flow>
 </mule>

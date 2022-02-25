@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion> 
-
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mycompany</groupId>
 	<artifactId>github-actions-demo</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
@@ -40,6 +39,8 @@
 						<connectedAppClientSecret>${connectedApp_clientSecret}</connectedAppClientSecret>
 						<connectedAppGrantType>${grantType}</connectedAppGrantType>
 						<applicationName>${app.name}</applicationName>
+						<aws.secretKey>${awsSecretKey}</aws.secretKey>
+						<mule.vault.key>${vaultKey}</mule.vault.key>
 						<environment>${env}</environment>
 						<workerType>MICRO</workerType>
 						<region>us-east-2</region>
@@ -65,6 +66,18 @@
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-sockets-connector</artifactId>
 			<version>1.2.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.connectors</groupId>
+			<artifactId>mule-amazon-s3-connector</artifactId>
+			<version>5.7.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.modules</groupId>
+			<artifactId>mule-secure-configuration-property-module</artifactId>
+			<version>1.2.3</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
