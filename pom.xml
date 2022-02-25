@@ -46,9 +46,7 @@
 						<workers>1</workers>
 						<objectStoreV2>true</objectStoreV2>
 						<properties>
-							<aws.secretKey>${aws.secretKey}</aws.secretKey>
 							<anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
-							<mule.vault.key>${vaultKey}</mule.vault.key>
 							<environment>${env}</environment>
 							<workerType>MICRO</workerType>
 							<region>us-east-2</region>
