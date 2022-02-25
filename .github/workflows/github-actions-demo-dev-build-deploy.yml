@@ -35,6 +35,7 @@ jobs:
         aws.secretKey=ttt
         api.name=testProj
         EOF
+        cat /home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties
       
       #Caches the maven dependencies
     - uses: actions/cache@v1
