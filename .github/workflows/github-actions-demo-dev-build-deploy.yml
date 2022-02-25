@@ -32,6 +32,7 @@ jobs:
         ls -ltr
         cat > "/home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties" <<EOF
         api.id=9879879
+        aws.secretKey=ttt
         api.name=testProj
         EOF
       
