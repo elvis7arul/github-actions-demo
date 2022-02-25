@@ -39,7 +39,7 @@
 						<connectedAppClientSecret>${connectedApp_clientSecret}</connectedAppClientSecret>
 						<connectedAppGrantType>${grantType}</connectedAppGrantType>
 						<applicationName>${app.name}</applicationName>
-						<aws.secretKey>${awsSecretKey}</aws.secretKey>
+						<aws.secretKey>${aws.secretKey}</aws.secretKey>
 						<mule.vault.key>${vaultKey}</mule.vault.key>
 						<environment>${env}</environment>
 						<workerType>MICRO</workerType>

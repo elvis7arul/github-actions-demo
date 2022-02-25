@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "build"  
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -25,6 +25,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: Create local changes
+      run: |
+        cat > "~/$github-actions-demo/src/main/resources/properties.properties" <<EOF
+        api.id=9879879
+        api.name=testProj
+        EOF
       
       #Caches the maven dependencies
       - uses: actions/cache@v1
@@ -45,7 +52,7 @@ jobs:
         run: |
           mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
           -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
-          -DawsSecretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
+          -Daws.secretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
           -DvaultKey=MuleSoft12345678 \
           -Dapp.name=$APP_NAME-$ENV_SUFFIX \
           -DgrantType=client_credentials \
@@ -99,7 +106,7 @@ jobs:
          -Dmule.artifact=$artifactName \
          -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
-         -DawsSecretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
+         -Daws.secretKey=/rX8dWMkCbQLRpHqAbslSclPq+tq3ytY5B0I3BuM \
          -DvaultKey=MuleSoft12345678 \
          -Dapp.name=$APP_NAME-$ENV_SUFFIX \
          -DgrantType=client_credentials \
