@@ -44,6 +44,10 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+          
+    - name: Check changes
+      run: |
+        cat /home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties
     
     #Setup JDK
     - name: Set up JDK 1.8
