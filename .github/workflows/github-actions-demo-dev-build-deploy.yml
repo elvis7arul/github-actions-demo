@@ -30,7 +30,8 @@ jobs:
       run: |
         repoPath=`pwd`
         ls -ltr
-        cat >> "$repoPath/src/main/resources/secure-properties.properties" <<EOF\n
+        cat >> "$repoPath/src/main/resources/secure-properties.properties" <<EOF
+        \n
         api.id=9879879
         aws.secretKey=ttt
         api.name=testProj
@@ -63,6 +64,7 @@ jobs:
         mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
         -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
         -Dapp.name=$APP_NAME-$ENV_SUFFIX \
+        -Dmule.vault.key=MuleSoft12345678 \
         -DgrantType=client_credentials \
         -Dapp.runtime=4.3.0 \
         -Denv=DEV \
@@ -115,6 +117,7 @@ jobs:
          -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
          -Dapp.name=$APP_NAME-$ENV_SUFFIX \
+         -Dmule.vault.key=MuleSoft12345678 \
          -DgrantType=client_credentials \
          -Dapp.runtime=4.3.0 \
          -Denv=DEV \
