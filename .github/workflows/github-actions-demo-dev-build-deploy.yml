@@ -28,7 +28,7 @@ jobs:
       
     - name: Create local changes
       run: |
-        pwd > $repoPath
+        repoPath=`pwd`
         ls -ltr
         cat >> "$repoPath/src/main/resources/secure-properties.properties" <<EOF
         api.id=9879879
