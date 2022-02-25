@@ -10,6 +10,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="c5baf3de-94fc-4251-950c-3b42bc421d4c" >
 		<s3:basic-connection accessKey="AKIAYTN4MS3CYXCCM6Y3" secretKey="${aws.secretKey}" region="EU_WEST_2" />
 	</s3:config>
+	<global-property doc:name="Global Property" doc:id="b42b9a5d-7853-492a-9930-fdb7dc8c29a6" name="aws.secretKey" value="${aws.secretKey}" />
 	<flow name="github-actions-demoFlow" doc:id="1d209121-3834-4942-adab-d1aeafe5ecb5" >
 		<scheduler doc:name="Scheduler" doc:id="1a673ab9-cae2-4c25-bff4-a6addf8a740c" >
 			<scheduling-strategy >
