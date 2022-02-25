@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "build"  
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -23,40 +23,66 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE
+    - uses: actions/checkout@v2
+      
+    - name: Create local changes
+      run: |
+        repoPath=`pwd`
+        ls -ltr
+        cat >> "$repoPath/src/main/resources/secure-properties.properties" <<EOF
+        
+        api.id=9879879
+        aws.secretKey=ttt
+        api.name=testProj
+        mule.vault.key=MuleSoft12345678
+        EOF
+        cat /home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties
+        cat $repoPath/src/main/resources/secure-properties.properties
       
       #Caches the maven dependencies
-      - uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      
-      #Setup JDK
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      
-      #Maven Build 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-
-      # Append Artifact name with Commit Hash
-      - name: Stamp artifact file name with commit hash
-        run: |
-          artifactName1=$(ls target/*.jar | head -1)
-          commitHash=$(git rev-parse --short "$GITHUB_SHA")
-          artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
-          mv $artifactName1 $artifactName2
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
           
-      - name: Upload artifact 
-        uses: actions/upload-artifact@master
-        with:
-            name: artifacts
-            path: target/*.jar
+    - name: Check changes
+      run: |
+        cat /home/runner/work/github-actions-demo/github-actions-demo/src/main/resources/secure-properties.properties
+    
+    #Setup JDK
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    
+    #Maven Build 
+    - name: Build with Maven
+      run: |
+        mvn -B package --file pom.xml -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
+        -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
+        -Dapp.name=$APP_NAME-$ENV_SUFFIX \
+        -Dmule.vault.key=MuleSoft12345678 \
+        -DgrantType=client_credentials \
+        -Dapp.runtime=4.3.0 \
+        -Denv=DEV \
+        -DskipTests
+
+    # Append Artifact name with Commit Hash
+    - name: Stamp artifact file name with commit hash
+      run: |
+        artifactName1=$(ls target/*.jar | head -1)
+        commitHash=$(git rev-parse --short "$GITHUB_SHA")
+        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
+        mv $artifactName1 $artifactName2
+        
+    - name: Upload artifact 
+      uses: actions/upload-artifact@master
+      with:
+          name: artifacts
+          path: target/*.jar
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -91,6 +117,7 @@ jobs:
          -DconnectedApp_clientId="$ANYPOINT_USERNAME" \
          -DconnectedApp_clientSecret="$ANYPOINT_PASSWORD" \
          -Dapp.name=$APP_NAME-$ENV_SUFFIX \
+         -Dmule.vault.key=MuleSoft12345678 \
          -DgrantType=client_credentials \
          -Dapp.runtime=4.3.0 \
          -Denv=DEV \
