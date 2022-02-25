@@ -28,7 +28,7 @@ jobs:
       
     - name: Create local changes
       run: |
-        cat > "~/github-actions-demo/src/main/resources/secure-properties.properties" <<EOF
+        cat > "/home/runner/work/github-actions-demo/src/main/resources/secure-properties.properties" <<EOF
         api.id=9879879
         api.name=testProj
         EOF
